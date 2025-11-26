@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.pth
+*.ckpt
+*.tar
+*.zip
+*.gz
+
+# Virtual environments
+.venv/
+.env/
+venv/
+ENV/
+
+# Project outputs
+data/
+generated/
+generated
+local_data/
+local_data
+pretrained/
+pretrained
+*.npz
+*.pt
+*.log
+*.skips.log
+outputs/
+outputs
+tmp_radgraph/
+tmp_radgraph
+wandb/
+wandb
+
+# Generated reports and notebooks
+reports/
+sample_reports/
+
+# IDE / tooling
+.vscode/
+.idea/
+*.swp
+.DS_Store

@@ -1,0 +1,289 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; color: #111; }
+  h1 { font-size: 22px; margin-bottom: 6px; }
+  h2 { font-size: 18px; margin: 0 0 12px 0; }
+  .meta { color: #555; margin-bottom: 16px; }
+  .dataset-pill { display:inline-block; margin-left:12px; padding:3px 10px; border-radius:999px; background:#1d4ed8; color:#fff; font-size:12px; }
+  .summary { margin: 20px 0 28px 0; }
+  .summary-cards { display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .summary-card { border:1px solid #e5e5e5; border-radius:12px; padding:14px; background:#fff; box-shadow:0 1px 2px rgba(15,23,42,0.05); }
+  .summary-card h3 { margin:0 0 6px 0; font-size:14px; color:#334155; }
+  .summary-card .big { font-size:22px; font-weight:600; }
+  .summary-card ul { margin:8px 0 0 0; padding-left:16px; color:#475569; font-size:13px; }
+  .summary-notes { margin-top:16px; padding:12px 16px; border-radius:12px; background:#fef3c7; border:1px solid #fde68a; color:#92400e; }
+  .summary-notes ul { margin:8px 0 0 0; padding-left:18px; }
+  .report { margin: 24px 0; }
+  .report-text { white-space: pre-wrap; background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:16px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:13px; color:#1f2937; max-height:360px; overflow-y:auto; }
+  .layout { display:grid; gap:28px; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); align-items:start; }
+  .gallery-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:16px; }
+  figure.img-card { margin:0; border:1px solid #e5e5e5; border-radius:14px; background:#fff; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 1px 3px rgba(15,23,42,0.08); }
+  .img-card .img-wrap { padding:12px; position:relative; }
+  .img-card .img-wrap img { width:100%; height:auto; border-radius:12px; display:block; }
+  .img-card.has-overlay .img-wrap { padding:0; }
+  .img-card.has-overlay .img-wrap img.base { border-radius:0; }
+  .img-card.has-overlay .img-wrap img.overlay { position:absolute; top:0; left:0; width:100%; height:100%; border-radius:0; opacity:0; transition:opacity 0.2s ease; mix-blend-mode:multiply; pointer-events:none; }
+  .img-card.has-overlay.show-overlay .img-wrap img.overlay { opacity:0.85; }
+  figure.img-card figcaption { padding:12px 14px 14px 14px; background:#fafafa; font-size:12px; color:#555; border-top:1px solid #eaeaea; display:flex; flex-direction:column; gap:6px; }
+  .meta-line { font-size:12px; color:#475569; }
+  .meta-line.subtle { color:#94a3b8; font-style:italic; }
+  .mini-list { list-style:none; padding:0; margin:4px 0 0 0; display:flex; flex-direction:column; gap:4px; }
+  .mini-list li { display:flex; justify-content:space-between; font-size:12px; color:#1f2937; }
+  .meta-actions { display:flex; justify-content:flex-end; }
+  .overlay-toggle { border:1px solid #cbd5f5; background:#eef2ff; color:#3730a3; font-size:12px; padding:4px 8px; border-radius:8px; cursor:pointer; }
+  .overlay-toggle.active { background:#3730a3; color:#fff; }
+  .overlay-toggle.disabled, .overlay-toggle:disabled { border-color:#e2e8f0; background:#f1f5f9; color:#94a3b8; cursor:not-allowed; }
+  details.img-drill summary { cursor:pointer; color:#2563eb; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:12px; margin-left:8px; }
+  .ok { background:#E6F4EA; color:#137333; }
+  .err { background:#FCE8E6; color:#B3261E; }
+  table { width:100%; border-collapse: collapse; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid #eee; font-size:14px; vertical-align:top; }
+  th { background:#fafafa; position: sticky; top: 0; z-index:1; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12px; color:#666; }
+  .pill { padding:2px 6px; border-radius:10px; background:#f4f4f4; font-size:12px; }
+  .empty-note { padding:16px; border:1px dashed #ccc; border-radius:10px; font-size:13px; color:#666; background:#fdfdfd; }
+  .concept-filters { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+  .concept-filters button { border:1px solid #d4d4d8; background:#f8fafc; padding:6px 10px; border-radius:20px; font-size:12px; cursor:pointer; }
+  .concept-filters button.active { background:#111827; color:#fff; border-color:#111827; }
+  tr.group-header td { background:#f3f4f6; font-weight:600; font-size:13px; color:#1f2937; }
+  details.synonyms { margin-top:4px; font-size:12px; }
+  details.synonyms ul { margin:4px 0 0 16px; padding:0; }
+  details.synonyms summary { cursor:pointer; color:#2563eb; }
+  details.report-snippet summary { cursor:pointer; color:#2563eb; font-size:12px; }
+  details.report-snippet p { margin:6px 0 0 0; font-size:12px; color:#1f2937; }
+  mark.alias-hit { background:#fef08a; padding:0 2px; border-radius:3px; }
+</style>
+</head>
+<body>
+<h1>Study: {{ study_key|e }}{% if dataset_name %} <span class="dataset-pill">{{ dataset_name|e }}</span>{% endif %}</h1>
+<div class="meta">Explainable concept report (study-level)</div>
+
+{% if task_label %}
+  <div style="margin:8px 0 12px 0">
+    <strong>{{ task_label.name }}</strong>:
+    {% if task_label.pred is not none %}
+      Pred <span class="badge {{ 'ok' if task_label.pred else 'err' }}">{{ 'POS' if task_label.pred else 'NEG' }}</span>
+    {% endif %}
+    {% if task_label.gt is not none %}
+      &nbsp;|&nbsp; GT <span class="badge {{ 'ok' if task_label.gt else 'err' }}">{{ 'POS' if task_label.gt else 'NEG' }}</span>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% if summary %}
+  <section class="summary">
+    <h2>Summary</h2>
+    <div class="summary-cards">
+      <div class="summary-card">
+        <h3>Predicted Positives</h3>
+        <div class="big">{{ summary.predicted_count or 0 }}</div>
+        <div class="meta-line">of {{ summary.total_concepts or 0 }} concepts</div>
+      </div>
+      {% if summary.gt_positive_count is not none %}
+        <div class="summary-card">
+          <h3>GT Positives</h3>
+          <div class="big">{{ summary.gt_positive_count }}</div>
+        </div>
+      {% endif %}
+      <div class="summary-card">
+        <h3>Top Confidence</h3>
+        <ul>
+          {% set tops = summary.top_concepts or [] %}
+          {% if tops %}
+            {% for item in tops %}
+              <li>{{ item.display_name|e }} <span class="mono">{{ '%.2f'|format(item.prob) }}</span></li>
+            {% endfor %}
+          {% else %}
+            <li>No high-confidence concepts yet.</li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+    {% if summary.warnings %}
+      <div class="summary-notes">
+        <h3>Warnings</h3>
+        <ul>
+          {% for warning in summary.warnings %}
+            <li>{{ warning|e }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </section>
+{% endif %}
+
+{% if report_text %}
+  <section class="report">
+    <h2>Original Report</h2>
+    <pre class="report-text">{{ report_text.strip()|e }}</pre>
+  </section>
+{% endif %}
+
+<div class="layout">
+  <section class="gallery">
+    <h2>Study Images</h2>
+    <div class="gallery-grid">
+      {% if images %}
+        {% for image in images %}
+          {% if image.load_failed %}
+            <div class="empty-note">[image load failed: {{ image.path|e }}]</div>
+          {% else %}
+            <figure class="img-card{% if image.overlay_base64 %} has-overlay{% endif %}">
+              <div class="img-wrap">
+                <img class="base" src="data:image/png;base64,{{ image.base64 }}" alt="{{ image.filename|e }}" />
+                {% if image.overlay_base64 %}
+                  <img class="overlay" src="data:image/png;base64,{{ image.overlay_base64 }}" alt="CAM {{ image.filename|e }}" />
+                {% endif %}
+              </div>
+              <figcaption>
+                <div class="meta-line"><strong>{{ image.filename|e }}</strong></div>
+                <div class="meta-line">View: {{ image.view }} · Size: {{ image.image_meta.orig_width }}×{{ image.image_meta.orig_height }}</div>
+                {% if image.top_concepts %}
+                  <details class="img-drill">
+                    <summary>Top concepts</summary>
+                    <ul class="mini-list">
+                      {% for concept in image.top_concepts %}
+                        <li><span>{{ concept.display_name|e }}</span> <span class="mono">{{ concept.prob_display }}</span></li>
+                      {% endfor %}
+                    </ul>
+                  </details>
+                {% else %}
+                  <div class="meta-line subtle">No strong per-image predictions.</div>
+                {% endif %}
+                <div class="meta-actions">
+                  {% if image.overlay_base64 %}
+                    <button class="overlay-toggle" type="button" data-available="1" title="Toggle CAM overlay">Show overlay</button>
+                  {% else %}
+                    <button class="overlay-toggle disabled" type="button" title="No CAM available" disabled>CAM unavailable</button>
+                  {% endif %}
+                </div>
+              </figcaption>
+            </figure>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <div class="empty-note">No images found for this study.</div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="concepts">
+    <h2>Concept Probabilities</h2>
+    <div class="concept-filters">
+      <button type="button" class="active" data-filter="all">All</button>
+      <button type="button" data-filter="pred-pos">Pred POS</button>
+      <button type="button" data-filter="gt-pos">GT POS</button>
+      <button type="button" data-filter="high-conf" data-threshold="{{ '%.2f'|format(high_conf_threshold) }}">Conf ≥ {{ '%.2f'|format(high_conf_threshold) }}</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Concept</th>
+          <th>Prob</th>
+          <th>Thr</th>
+          <th>Pred</th>
+          <th>GT</th>
+          <th>Evidence</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for group in concept_groups %}
+          {% if group.rows %}
+            <tr class="group-header"><td colspan="6">{{ group.name|e }}</td></tr>
+            {% for row in group.rows %}
+              <tr data-prob="{{ row.data_attrs.prob }}" data-pred="{{ row.data_attrs.pred }}" data-gt="{{ row.data_attrs.gt }}">
+                <td>
+                  <strong>{{ row.display_name|e }}</strong>
+                  <div class="mono">{{ row.concept_id|e }}</div>
+                </td>
+                <td>{{ row.prob_display }}</td>
+                <td>{{ row.thr_display }}</td>
+                <td><span class="badge {{ 'ok' if row.pred else 'err' }}">{{ 'POS' if row.pred else 'NEG' }}</span></td>
+                <td>
+                  {% if row.gt is none %}
+                    <span class="pill">n/a</span>
+                  {% else %}
+                    <span class="badge {{ 'ok' if row.gt else 'err' }}">{{ 'POS' if row.gt else 'NEG' }}</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if row.evidence %}{{ row.evidence|e }}{% endif %}
+                  {% if row.synonyms %}
+                    <details class="synonyms">
+                      <summary>Synonyms</summary>
+                      <ul>
+                        {% for syn in row.synonyms %}
+                          <li>{{ syn|e }}</li>
+                        {% endfor %}
+                      </ul>
+                    </details>
+                  {% endif %}
+                  {% if row.contexts_html %}
+                    <details class="report-snippet">
+                      <summary>Report context</summary>
+                      {% for snippet in row.contexts_html %}
+                        <p>{{ snippet|safe }}</p>
+                      {% endfor %}
+                    </details>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const overlayButtons = document.querySelectorAll('.overlay-toggle');
+  overlayButtons.forEach(btn => {
+    if (btn.classList.contains('disabled') || btn.disabled) return;
+    btn.addEventListener('click', () => {
+      const fig = btn.closest('.img-card');
+      if (!fig) return;
+      const show = !fig.classList.contains('show-overlay');
+      fig.classList.toggle('show-overlay', show);
+      btn.classList.toggle('active', show);
+      btn.textContent = show ? 'Hide overlay' : 'Show overlay';
+    });
+  });
+
+  const filterButtons = document.querySelectorAll('.concept-filters button');
+  const rows = document.querySelectorAll('.concepts table tbody tr');
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const mode = btn.dataset.filter;
+      const threshold = parseFloat(btn.dataset.threshold || '{{ '%.2f'|format(high_conf_threshold) }}');
+      rows.forEach(row => {
+        if (row.classList.contains('group-header')) {
+          row.style.display = '';
+          return;
+        }
+        const prob = parseFloat(row.dataset.prob || '0');
+        const pred = row.dataset.pred === '1';
+        const gt = row.dataset.gt === '1';
+        let show = true;
+        if (mode === 'pred-pos') {
+          show = pred;
+        } else if (mode === 'gt-pos') {
+          show = gt;
+        } else if (mode === 'high-conf') {
+          show = prob >= threshold;
+        }
+        row.style.display = show ? '' : 'none';
+      });
+    });
+  });
+});
+</script>
+</body>
+</html>

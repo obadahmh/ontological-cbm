@@ -1,0 +1,735 @@
+{
+  "dataset": "chexpert_plus",
+  "description": "Temporary concept bank for CheXpert 14 labels with curated UMLS concepts.",
+  "generated_at": "2025-10-22T07:50:43Z",
+  "concepts": {
+    "No Finding": [
+      {
+        "cui": "C5394701",
+        "preferred_name": "Normal chest",
+        "aliases": [
+          "normal chest radiograph",
+          "clear chest xray",
+          "no acute cardiopulmonary abnormality",
+          "normal chest imaging"
+        ]
+      },
+      {
+        "cui": "C5231182",
+        "preferred_name": "Normal lung",
+        "aliases": [
+          "lungs clear",
+          "no focal lung abnormality",
+          "clear lung fields",
+          "no pulmonary opacity"
+        ]
+      },
+      {
+        "cui": "C0442816",
+        "preferred_name": "Normal limits",
+        "aliases": [
+          "within normal limits",
+          "wnl",
+          "unchanged and normal",
+          "normal appearance"
+        ]
+      },
+      {
+        "cui": "C3809765",
+        "preferred_name": "No abnormalities",
+        "aliases": [
+          "no abnormality seen",
+          "no significant abnormality",
+          "negative exam",
+          "no acute findings"
+        ]
+      },
+      {
+        "cui": "C5395846",
+        "preferred_name": "No abnormality of soft tissue",
+        "aliases": [
+          "no soft tissue abnormality",
+          "no chest wall abnormality",
+          "soft tissues unremarkable",
+          "no overlying soft tissue issue"
+        ]
+      }
+    ],
+    "Enlarged Cardiomediastinum": [
+      {
+        "cui": "C0746459",
+        "preferred_name": "Widened mediastinum",
+        "aliases": [
+          "mediastinal widening",
+          "broad mediastinum",
+          "enlarged mediastinal silhouette",
+          "wide mediastinum"
+        ]
+      },
+      {
+        "cui": "C0264576",
+        "preferred_name": "Mediastinal shift",
+        "aliases": [
+          "mediastinal deviation",
+          "shift of mediastinum",
+          "tracheal deviation toward",
+          "mediastinal displacement"
+        ]
+      },
+      {
+        "cui": "C0240318",
+        "preferred_name": "Mediastinal mass",
+        "aliases": [
+          "mediastinal mass",
+          "mediastinal fullness",
+          "anterior mediastinal mass",
+          "bulky mediastinum"
+        ]
+      },
+      {
+        "cui": "C0520743",
+        "preferred_name": "Mediastinal lymphadenopathy",
+        "aliases": [
+          "mediastinal adenopathy",
+          "enlarged mediastinal nodes",
+          "hilar and mediastinal nodes enlarged",
+          "lymphadenopathy mediastinum"
+        ]
+      },
+      {
+        "cui": "C5235887",
+        "preferred_name": "Mediastinal Soft Tissue",
+        "aliases": [
+          "prominent mediastinal soft tissues",
+          "cardiomediastinal silhouette prominent",
+          "mediastinal contours enlarged",
+          "mediastinal soft tissue prominence"
+        ]
+      }
+    ],
+    "Cardiomegaly": [
+      {
+        "cui": "C0018800",
+        "preferred_name": "Cardiomegaly",
+        "aliases": [
+          "cardiac enlargement",
+          "enlarged heart",
+          "heart size enlarged",
+          "cardiomegaly persists"
+        ]
+      },
+      {
+        "cui": "C3671630",
+        "preferred_name": "Cardiac silhouette enlarged",
+        "aliases": [
+          "enlarged cardiac silhouette",
+          "cardiac silhouette prominence",
+          "prominent cardiac silhouette",
+          "cardiac silhouette remains large"
+        ]
+      },
+      {
+        "cui": "C0507134",
+        "preferred_name": "Cardiac shadow viewed radiologically",
+        "aliases": [
+          "cardiac shadow enlarged",
+          "cardiac shadow prominent",
+          "broad cardiac shadow",
+          "cardiopericardial silhouette"
+        ]
+      },
+      {
+        "cui": "C4014398",
+        "preferred_name": "Biventricular enlargement",
+        "aliases": [
+          "biventricular enlargement",
+          "both ventricles enlarged",
+          "global cardiomegaly",
+          "diffuse cardiac enlargement"
+        ]
+      },
+      {
+        "cui": "C2675972",
+        "preferred_name": "Ventricular enlargement",
+        "aliases": [
+          "ventricular enlargement",
+          "ventricular silhouette enlarged",
+          "ventricular prominence",
+          "enlarged ventricles"
+        ]
+      }
+    ],
+    "Lung Lesion": [
+      {
+        "cui": "C0034079",
+        "preferred_name": "Nodule of lung",
+        "aliases": [
+          "pulmonary nodule",
+          "lung nodule",
+          "solitary lung nodule",
+          "pulmonary nodule noted"
+        ]
+      },
+      {
+        "cui": "C0149726",
+        "preferred_name": "Lung mass",
+        "aliases": [
+          "pulmonary mass",
+          "lung mass",
+          "masslike opacity",
+          "parenchymal mass"
+        ]
+      },
+      {
+        "cui": "C0748164",
+        "preferred_name": "Multiple Pulmonary Nodules",
+        "aliases": [
+          "multiple pulmonary nodules",
+          "numerous lung nodules",
+          "scattered pulmonary nodules",
+          "bilateral pulmonary nodules"
+        ]
+      },
+      {
+        "cui": "C4761377",
+        "preferred_name": "Spiculated Nodule",
+        "aliases": [
+          "spiculated pulmonary nodule",
+          "spiculated lung nodule",
+          "spiky nodule",
+          "spiculated lesion"
+        ]
+      },
+      {
+        "cui": "C0221198",
+        "preferred_name": "Lesion",
+        "aliases": [
+          "pulmonary lesion",
+          "parenchymal lesion",
+          "lung lesion",
+          "focal lesion"
+        ]
+      }
+    ],
+    "Lung Opacity": [
+      {
+        "cui": "C4531104",
+        "preferred_name": "Pulmonary opacity",
+        "aliases": [
+          "pulmonary opacity",
+          "lung opacity",
+          "hazy opacity",
+          "parenchymal opacity"
+        ]
+      },
+      {
+        "cui": "C5539411",
+        "preferred_name": "Ground glass opacity",
+        "aliases": [
+          "ground glass opacity",
+          "groundglass opacities",
+          "ground-glass changes",
+          "diffuse groundglass"
+        ]
+      },
+      {
+        "cui": "C4086623",
+        "preferred_name": "Nodular Opacity",
+        "aliases": [
+          "nodular opacity",
+          "nodular opacities",
+          "rounded opacity",
+          "nodular density"
+        ]
+      },
+      {
+        "cui": "C4086149",
+        "preferred_name": "Centrilobular Opacity",
+        "aliases": [
+          "centrilobular opacities",
+          "centrilobular nodularity",
+          "tree-in-bud opacities",
+          "centrilobular density"
+        ]
+      },
+      {
+        "cui": "C5139173",
+        "preferred_name": "Apical pulmonary opacity",
+        "aliases": [
+          "apical opacity",
+          "apical density",
+          "apical lung opacity",
+          "apical infiltrate"
+        ]
+      }
+    ],
+    "Edema": [
+      {
+        "cui": "C0034063",
+        "preferred_name": "Pulmonary Edema",
+        "aliases": [
+          "pulmonary edema",
+          "alveolar edema",
+          "pulmonary oedema",
+          "cardiogenic edema"
+        ]
+      },
+      {
+        "cui": "C0013604",
+        "preferred_name": "Edema",
+        "aliases": [
+          "edema",
+          "interstitial edema",
+          "fluid overload",
+          "soft tissue edema"
+        ]
+      },
+      {
+        "cui": "C0748120",
+        "preferred_name": "pulmonary edema interstitial",
+        "aliases": [
+          "interstitial pulmonary edema",
+          "interstitial edema",
+          "interstitial markings",
+          "septal edema"
+        ]
+      },
+      {
+        "cui": "C0155919",
+        "preferred_name": "Acute pulmonary edema",
+        "aliases": [
+          "acute pulmonary edema",
+          "flash pulmonary edema",
+          "acute edema",
+          "sudden pulmonary edema"
+        ]
+      },
+      {
+        "cui": "C3670573",
+        "preferred_name": "Perivascular edema",
+        "aliases": [
+          "perivascular edema",
+          "vascular congestion",
+          "perihilar haze",
+          "perivascular cuffing"
+        ]
+      }
+    ],
+    "Consolidation": [
+      {
+        "cui": "C0521530",
+        "preferred_name": "Lung consolidation",
+        "aliases": [
+          "lung consolidation",
+          "airspace consolidation",
+          "consolidation",
+          "dense consolidation"
+        ]
+      },
+      {
+        "cui": "C5139174",
+        "preferred_name": "Parenchymal consolidation",
+        "aliases": [
+          "parenchymal consolidation",
+          "parenchymal opacity",
+          "lobar consolidation",
+          "focal consolidation"
+        ]
+      },
+      {
+        "cui": "C0235896",
+        "preferred_name": "Pulmonary Infiltrate",
+        "aliases": [
+          "pulmonary infiltrate",
+          "airspace disease",
+          "infiltrate",
+          "parenchymal infiltrate"
+        ]
+      },
+      {
+        "cui": "C4313225",
+        "preferred_name": "Interstitial infiltrates",
+        "aliases": [
+          "interstitial infiltrates",
+          "interstitial markings",
+          "reticular infiltrates",
+          "diffuse infiltrates"
+        ]
+      },
+      {
+        "cui": "C4763778",
+        "preferred_name": "Semiconsolidation Nodule",
+        "aliases": [
+          "semiconsolidation nodule",
+          "partially solid nodule",
+          "part-solid lesion",
+          "groundglass nodule with solid component"
+        ]
+      }
+    ],
+    "Pneumonia": [
+      {
+        "cui": "C0032285",
+        "preferred_name": "Pneumonia",
+        "aliases": [
+          "pneumonia",
+          "pulmonary infection",
+          "lung infection",
+          "pneumonic consolidation"
+        ]
+      },
+      {
+        "cui": "C0006285",
+        "preferred_name": "Bronchopneumonia",
+        "aliases": [
+          "bronchopneumonia",
+          "bronchopneumonic pattern",
+          "patchy pneumonia",
+          "bronchopneumonic opacities"
+        ]
+      },
+      {
+        "cui": "C0032290",
+        "preferred_name": "Aspiration Pneumonia",
+        "aliases": [
+          "aspiration pneumonia",
+          "aspiration pneumonitis",
+          "aspiration-related infiltrates",
+          "dependent opacities"
+        ]
+      },
+      {
+        "cui": "C0702135",
+        "preferred_name": "Primary atypical pneumonia",
+        "aliases": [
+          "atypical pneumonia",
+          "walking pneumonia",
+          "atypical infection",
+          "diffuse atypical pneumonia"
+        ]
+      },
+      {
+        "cui": "C1290339",
+        "preferred_name": "Focal pneumonia",
+        "aliases": [
+          "focal pneumonia",
+          "focal consolidation",
+          "focal pneumonic opacity",
+          "localized pneumonia"
+        ]
+      }
+    ],
+    "Atelectasis": [
+      {
+        "cui": "C0004144",
+        "preferred_name": "Atelectasis",
+        "aliases": [
+          "atelectasis",
+          "lung collapse",
+          "volume loss",
+          "plate atelectasis"
+        ]
+      },
+      {
+        "cui": "C0264496",
+        "preferred_name": "Focal atelectasis",
+        "aliases": [
+          "focal atelectasis",
+          "segmental atelectasis",
+          "localized atelectasis",
+          "small atelectasis"
+        ]
+      },
+      {
+        "cui": "C0264495",
+        "preferred_name": "Linear atelectasis",
+        "aliases": [
+          "linear atelectasis",
+          "bandlike atelectasis",
+          "linear opacity",
+          "band atelectasis"
+        ]
+      },
+      {
+        "cui": "C0264499",
+        "preferred_name": "Compression Pulmonary Atelectasis",
+        "aliases": [
+          "compression atelectasis",
+          "compressive atelectasis",
+          "effusion related atelectasis",
+          "mass effect atelectasis"
+        ]
+      },
+      {
+        "cui": "C0264497",
+        "preferred_name": "Complete atelectasis",
+        "aliases": [
+          "complete atelectasis",
+          "lobar collapse",
+          "complete collapse",
+          "atelectasis of entire lobe"
+        ]
+      }
+    ],
+    "Pneumothorax": [
+      {
+        "cui": "C0032326",
+        "preferred_name": "Pneumothorax",
+        "aliases": [
+          "pneumothorax",
+          "collapsed lung",
+          "pleural air",
+          "apical pneumothorax"
+        ]
+      },
+      {
+        "cui": "C0020303",
+        "preferred_name": "Hydropneumothorax",
+        "aliases": [
+          "hydropneumothorax",
+          "air fluid level",
+          "pleural air fluid",
+          "hydro-pneumothorax"
+        ]
+      },
+      {
+        "cui": "C0264558",
+        "preferred_name": "Tension Pneumothorax",
+        "aliases": [
+          "tension pneumothorax",
+          "mediastinal shift with pneumothorax",
+          "tension physiology",
+          "pressure pneumothorax"
+        ]
+      },
+      {
+        "cui": "C0546333",
+        "preferred_name": "Right pneumothorax",
+        "aliases": [
+          "right pneumothorax",
+          "right apical pneumothorax",
+          "right-sided pneumothorax",
+          "right pleural air"
+        ]
+      },
+      {
+        "cui": "C0546334",
+        "preferred_name": "Left pneumothorax",
+        "aliases": [
+          "left pneumothorax",
+          "left apical pneumothorax",
+          "left-sided pneumothorax",
+          "left pleural air"
+        ]
+      }
+    ],
+    "Pleural Effusion": [
+      {
+        "cui": "C0032227",
+        "preferred_name": "Pleural effusion disorder",
+        "aliases": [
+          "pleural effusion",
+          "pleural fluid",
+          "layering effusion",
+          "effusion"
+        ]
+      },
+      {
+        "cui": "C0747635",
+        "preferred_name": "Bilateral pleural effusion",
+        "aliases": [
+          "bilateral effusions",
+          "both pleural effusions",
+          "bilateral pleural fluid",
+          "bilateral layering effusions"
+        ]
+      },
+      {
+        "cui": "C0747637",
+        "preferred_name": "Large Pleural Effusion",
+        "aliases": [
+          "large pleural effusion",
+          "massive effusion",
+          "significant effusion",
+          "near complete effusion"
+        ]
+      },
+      {
+        "cui": "C0747639",
+        "preferred_name": "Loculated pleural effusion",
+        "aliases": [
+          "loculated effusion",
+          "loculated pleural fluid",
+          "loculated collection",
+          "septated effusion"
+        ]
+      },
+      {
+        "cui": "C0264550",
+        "preferred_name": "Pleural effusion associated with pulmonary infection",
+        "aliases": [
+          "parapneumonic effusion",
+          "infection related effusion",
+          "empyema",
+          "infectious pleural fluid"
+        ]
+      }
+    ],
+    "Pleural Other": [
+      {
+        "cui": "C0264545",
+        "preferred_name": "Thickening of pleura",
+        "aliases": [
+          "pleural thickening",
+          "pleural thickening noted",
+          "pleural peel",
+          "pleural thickening along chest wall"
+        ]
+      },
+      {
+        "cui": "C0577703",
+        "preferred_name": "Pleural scarring",
+        "aliases": [
+          "pleural scarring",
+          "pleural fibrosis",
+          "pleural scar",
+          "fibrotic pleura"
+        ]
+      },
+      {
+        "cui": "C0340030",
+        "preferred_name": "Pleural plaque",
+        "aliases": [
+          "pleural plaques",
+          "calcified pleural plaques",
+          "pleural calcifications",
+          "asbestos plaque"
+        ]
+      },
+      {
+        "cui": "C0747647",
+        "preferred_name": "pleural nodule",
+        "aliases": [
+          "pleural nodule",
+          "pleural-based nodule",
+          "pleural-based mass",
+          "pleural nodularity"
+        ]
+      },
+      {
+        "cui": "C4476638",
+        "preferred_name": "Subpleural interstitial thickening",
+        "aliases": [
+          "subpleural thickening",
+          "subpleural reticulation",
+          "subpleural fibrosis",
+          "subpleural lines"
+        ]
+      }
+    ],
+    "Fracture": [
+      {
+        "cui": "C0016658",
+        "preferred_name": "Fracture",
+        "aliases": [
+          "fracture",
+          "broken bone",
+          "fracture line",
+          "osseous fracture"
+        ]
+      },
+      {
+        "cui": "C0035522",
+        "preferred_name": "Rib Fractures",
+        "aliases": [
+          "rib fracture",
+          "rib fx",
+          "fractured rib",
+          "rib break"
+        ]
+      },
+      {
+        "cui": "C0272567",
+        "preferred_name": "Fracture of multiple ribs",
+        "aliases": [
+          "multiple rib fractures",
+          "several rib fractures",
+          "multifocal rib fractures",
+          "multiple rib fx"
+        ]
+      },
+      {
+        "cui": "C0159658",
+        "preferred_name": "Fracture of clavicle",
+        "aliases": [
+          "clavicle fracture",
+          "clavicular fracture",
+          "fractured clavicle",
+          "clavicle fx"
+        ]
+      },
+      {
+        "cui": "C0585059",
+        "preferred_name": "Fracture with displacement",
+        "aliases": [
+          "displaced fracture",
+          "displacement of fracture",
+          "offset fracture",
+          "displaced fracture fragments"
+        ]
+      }
+    ],
+    "Support Devices": [
+      {
+        "cui": "C0179740",
+        "preferred_name": "Peripherally inserted central catheter (physical object)",
+        "aliases": [
+          "picc line",
+          "peripherally inserted central catheter",
+          "picc present",
+          "picc tip"
+        ]
+      },
+      {
+        "cui": "C0336630",
+        "preferred_name": "Endotracheal tube",
+        "aliases": [
+          "endotracheal tube",
+          "ett",
+          "endotracheal tube tip",
+          "intubated tube"
+        ]
+      },
+      {
+        "cui": "C0085678",
+        "preferred_name": "Nasogastric tube",
+        "aliases": [
+          "nasogastric tube",
+          "ng tube",
+          "feeding tube",
+          "enteric tube"
+        ]
+      },
+      {
+        "cui": "C0030163",
+        "preferred_name": "Artificial cardiac pacemaker",
+        "aliases": [
+          "pacemaker",
+          "cardiac pacer",
+          "pacing device",
+          "pacemaker leads"
+        ]
+      },
+      {
+        "cui": "C1145640",
+        "preferred_name": "Central venous catheter, device",
+        "aliases": [
+          "central venous catheter",
+          "central line",
+          "cvc",
+          "central venous line"
+        ]
+      }
+    ]
+  }
+}
