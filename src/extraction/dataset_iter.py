@@ -2,7 +2,7 @@ from pathlib import Path
 import pandas as pd
 from typing import Iterator, Tuple, Optional, List
 from functools import lru_cache
-from src.utils.identifiers import (
+from src.extraction.identifiers import (
     normalize_patient_id,
     normalize_study_id,
     patient_dir_variants,

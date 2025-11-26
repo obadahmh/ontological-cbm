@@ -5,8 +5,8 @@ import json
 from pathlib import Path
 from typing import Dict, Iterable, Iterator, List, Optional, Set, Tuple
 
-from src.dataset_iter import iter_images, _load_chexpert_plus_table, _fallback_chexpert_dirs
-from src.utils.identifiers import pid_sid_from_path
+from src.extraction.dataset_iter import iter_images, _load_chexpert_plus_table, _fallback_chexpert_dirs
+from src.extraction.identifiers import pid_sid_from_path
 from src.constants import CHEXPERT_PLUS_ROOT
 
 

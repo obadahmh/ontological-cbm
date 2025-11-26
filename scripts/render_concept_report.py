@@ -10,6 +10,7 @@ import json
 import math
 import os
 import re
+import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Set, Tuple
@@ -20,12 +21,18 @@ from tqdm import tqdm
 from scispacy.umls_semantic_type_tree import construct_umls_tree_from_tsv
 from scispacy.linking_utils import DEFAULT_UMLS_TYPES_PATH
 
+# Ensure repository root is on sys.path before importing src.*
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from src.paths import add_repo_root_to_sys_path
 
 add_repo_root_to_sys_path()
 from src import constants as data_constants
-from src.dataset_iter import lookup_report_text, _pid_sid_from_path
-from src.per_study import iter_image_records
+from src.extraction.dataset_iter import lookup_report_text
+from src.extraction.identifiers import pid_sid_from_path
+from src.extraction.per_study import iter_image_records
 
 
 def load_jsonl(path: Path) -> List[Dict]:
@@ -36,6 +43,96 @@ def load_jsonl(path: Path) -> List[Dict]:
             if line:
                 rows.append(json.loads(line))
     return rows
+
+
+def _load_concept_index(path: Path) -> Optional[List[str]]:
+    """Load a concept index mapping position -> name."""
+
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as err:  # pragma: no cover - defensive
+        print(f"[warn] unable to read concept index at {path}: {err}")
+        return None
+
+    if isinstance(data, list):
+        return [str(item) for item in data]
+    if isinstance(data, dict):
+        try:
+            max_idx = max(int(k) for k in data.keys())
+        except ValueError:
+            max_idx = len(data) - 1
+        names: List[str] = []
+        for idx in range(max_idx + 1):
+            key = str(idx)
+            if key in data:
+                names.append(str(data[key]))
+        return names
+
+    print(f"[warn] unsupported concept index format at {path}")
+    return None
+
+
+def _guess_concept_index(predictions_path: Path) -> Optional[Path]:
+    """Best-effort guess of a concept index JSON relative to predictions."""
+
+    candidates = [
+        predictions_path.with_name("concept_index.json"),
+        predictions_path.parent / "concept_index.json",
+        predictions_path.parent.parent / "concept_index.json",
+    ]
+    for cand in candidates:
+        if cand.exists() and cand.is_file():
+            return cand
+    return None
+
+
+def _convert_cbm_entries(
+    entries: List[Dict],
+    *,
+    concept_names: Optional[List[str]],
+    threshold: float,
+    dataset: Optional[str],
+) -> List[Dict]:
+    """Convert CBM-style probability vectors to concept lists in-place."""
+
+    warned_missing_names = False
+    for entry in entries:
+        if "concepts" in entry or "probs" not in entry:
+            continue
+
+        probs = entry.get("probs") or []
+        concepts: List[Dict[str, Any]] = []
+        for idx, prob in enumerate(probs):
+            try:
+                score = float(prob)
+            except (TypeError, ValueError):
+                continue
+            if score < threshold:
+                continue
+            name = None
+            if concept_names and idx < len(concept_names):
+                name = concept_names[idx]
+            else:
+                name = f"concept_{idx}"
+                if not warned_missing_names and concept_names is None:
+                    print("[warn] CBM entries detected but no concept index provided; falling back to numbered names.")
+                    warned_missing_names = True
+            concepts.append(
+                {
+                    "concept": name,
+                    "preferred_name": name,
+                    "cui": None,
+                    "score": score,
+                    "assertion": "present",
+                }
+            )
+        entry["concepts"] = concepts
+        if "study_key" not in entry and entry.get("study_id"):
+            entry["study_key"] = entry["study_id"]
+        if dataset and "dataset" not in entry:
+            entry["dataset"] = dataset
+
+    return entries
 
 
 def load_relations_cache(path: Path) -> Dict[str, Dict[str, Any]]:
@@ -132,7 +229,7 @@ def _ensure_chexpert_report_cache() -> None:
                 path_value = str(row.get("path_to_image", "")).strip()
                 pid = sid = ""
                 if path_value:
-                    pid, sid = _pid_sid_from_path(path_value)
+                    pid, sid = pid_sid_from_path(path_value)
                 pid = _strip_prefix_casefold(pid or str(row.get("deid_patient_id", "")), "patient")
                 sid = _strip_prefix_casefold(sid or str(row.get("study_id", "")), "study")
                 if not sid:
@@ -175,7 +272,7 @@ def _lookup_chexpert_report(short_key: str, image_path: Optional[str]) -> Option
     text = CHEXPERT_REPORT_CACHE.get(key)
     if text or not image_path:
         return text
-    pid, sid = _pid_sid_from_path(image_path)
+    pid, sid = pid_sid_from_path(image_path)
     if pid and sid:
         alt = f"patient{_strip_prefix_casefold(pid, 'patient')}/study{_strip_prefix_casefold(sid, 'study')}"
         text = CHEXPERT_REPORT_CACHE.get(alt)
@@ -1857,6 +1954,23 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dataset", required=True, help="Dataset name (e.g., chexpert_plus, mimic_cxr)")
     parser.add_argument("--reference_per_study", required=True, help="Reference per-study concepts JSONL")
     parser.add_argument("--predictions_per_study", required=True, help="Predicted per-study concepts JSONL")
+    parser.add_argument(
+        "--cbm_concept_index",
+        default=None,
+        help="Optional concept_index.json to map CBM probability vectors to concept names (auto-guessed if omitted).",
+    )
+    parser.add_argument(
+        "--cbm_reference_threshold",
+        type=float,
+        default=0.5,
+        help="Threshold for treating CBM ground-truth probabilities as present concepts.",
+    )
+    parser.add_argument(
+        "--cbm_pred_threshold",
+        type=float,
+        default=0.5,
+        help="Threshold for treating CBM prediction probabilities as present concepts.",
+    )
     parser.add_argument("--output", required=True, help="Output HTML path")
     parser.add_argument("--limit", type=int, default=None, help="Optional number of studies to include")
     parser.add_argument("--include_cui_context", action="store_true",
@@ -1880,13 +1994,44 @@ def main() -> None:
     args = parse_args()
 
     # Clear any cached report data to ensure we use the latest code
-    from src.dataset_iter import _chexpert_plus_report_dict, _mimic_cxr_report_dict
+    from src.extraction.dataset_iter import _chexpert_plus_report_dict, _mimic_cxr_report_dict
     _chexpert_plus_report_dict.cache_clear()
     _mimic_cxr_report_dict.cache_clear()
     REPORT_CACHE.clear()
 
+    concept_names: Optional[List[str]] = None
+    if args.cbm_concept_index:
+        concept_names = _load_concept_index(Path(args.cbm_concept_index).expanduser())
+        if concept_names:
+            print(f"[info] loaded concept index with {len(concept_names)} entries from {args.cbm_concept_index}")
+    if concept_names is None:
+        guessed_index = _guess_concept_index(Path(args.predictions_per_study))
+        if guessed_index:
+            concept_names = _load_concept_index(guessed_index)
+            if concept_names:
+                print(f"[info] using concept index from {guessed_index}")
+
     ref_entries = load_jsonl(Path(args.reference_per_study))
     pred_entries = load_jsonl(Path(args.predictions_per_study))
+
+    if concept_names is None and (
+        any("probs" in entry and "concepts" not in entry for entry in ref_entries)
+        or any("probs" in entry and "concepts" not in entry for entry in pred_entries)
+    ):
+        print("[warn] CBM-style probabilities detected but no concept index found; names will default to concept_{i}.")
+
+    ref_entries = _convert_cbm_entries(
+        ref_entries,
+        concept_names=concept_names,
+        threshold=args.cbm_reference_threshold,
+        dataset=args.dataset,
+    )
+    pred_entries = _convert_cbm_entries(
+        pred_entries,
+        concept_names=concept_names,
+        threshold=args.cbm_pred_threshold,
+        dataset=args.dataset,
+    )
 
     reference_map = build_reference_map(ref_entries)
     prediction_map = build_prediction_map(pred_entries)

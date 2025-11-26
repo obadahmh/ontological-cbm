@@ -1,6 +1,7 @@
 """Utilities for CLIP fine-tuning and feature caching."""
 from __future__ import annotations
 
+import logging
 import pickle
 from pathlib import Path
 from typing import Dict, List, Sequence
@@ -8,6 +9,8 @@ from typing import Dict, List, Sequence
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
+
+logger = logging.getLogger(__name__)
 
 
 class _ClipArchiveLoader(pickle.Unpickler):
@@ -76,7 +79,7 @@ def cache_features(
 ) -> Dict[str, object]:
     """Cache backbone features for faster linear-head training."""
     cache_path.parent.mkdir(parents=True, exist_ok=True)
-    print(f"[info] caching features to {cache_path}")
+    logger.info(f"Caching features to {cache_path}")
     model.eval()
     requires_restore = hasattr(model, "fc")
     original_fc = None

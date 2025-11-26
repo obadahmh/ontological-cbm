@@ -28,9 +28,9 @@ except ImportError:  # pragma: no cover
 from src.paths import add_repo_root_to_sys_path
 
 add_repo_root_to_sys_path()
-from src.concepts import aggregation as concept_agg
-from src.concepts import input as concept_input
-from src.concepts import linking as concept_linking
+from src.extraction.concepts import aggregation as concept_agg
+from src.extraction.concepts import input as concept_input
+from src.extraction.concepts import linking as concept_linking
 
 ClinicalEntityLinker = None  # populated when concept_linking constructs the linker
 
