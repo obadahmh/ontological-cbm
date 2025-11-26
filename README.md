@@ -1,4 +1,4 @@
-# MedCLIP Toolkit (Slim)
+# MedCLIP Toolkit
 
 Small, self-contained training loops for MedCLIP experiments. The trainers operate on pre-computed tensors or simple CSV/JSON files so the repo stays lightweight and easy to read.
 
