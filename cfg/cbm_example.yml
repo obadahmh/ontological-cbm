@@ -1,7 +1,7 @@
 predictions: /path/to/concept_predictions.jsonl
 labels_csv: data/local_data/chexpert-5x200-val-meta.csv
 chexpert5: true
-output_dir: data/outputs/cbm_label_head_demo
+output_dir: outputs/cbm_label_head_demo
 epochs: 5
 batch_size: 64
 learning_rate: 0.001

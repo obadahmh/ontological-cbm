@@ -1,8 +1,10 @@
-"""Train a simple classifier from feature tensors (concepts or labels)."""
+#!/usr/bin/env python3
+"""Train a simple linear classifier from feature tensors (concepts or labels)."""
 from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 from typing import Dict, Optional, Sequence, Tuple
 
@@ -11,8 +13,12 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
 
-from src.training.utils import set_seed
-from src.training.utils.metrics import compute_metrics
+REPO_ROOT = Path(__file__).resolve().parent.parent
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from lib.data import set_seed
+from lib.metrics import compute_metrics
 
 
 class TensorDataset(Dataset):
@@ -30,19 +36,23 @@ class TensorDataset(Dataset):
 
 
 class Classifier(nn.Module):
-    """Lightweight MLP for predicting concepts or labels from features."""
+    """Single linear head with optional activation on inputs."""
 
-    def __init__(self, input_dim: int, num_outputs: int, hidden: int = 512, dropout: float = 0.3):
+    def __init__(self, input_dim: int, num_outputs: int, activation: str = "none"):
         super().__init__()
-        self.net = nn.Sequential(
-            nn.Linear(input_dim, hidden),
-            nn.ReLU(inplace=True),
-            nn.Dropout(p=dropout),
-            nn.Linear(hidden, num_outputs),
-        )
+        acts = {
+            "none": nn.Identity(),
+            "relu": nn.ReLU(inplace=True),
+            "tanh": nn.Tanh(),
+        }
+        if activation not in acts:
+            raise ValueError(f"Unsupported activation: {activation}")
+        self.activation = acts[activation]
+        self.fc = nn.Linear(input_dim, num_outputs)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.net(x)
+        x = self.activation(x)
+        return self.fc(x)
 
 
 def _load_tensor(path: Path) -> torch.Tensor:
@@ -152,8 +162,7 @@ def _parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser.add_argument("--epochs", type=int, default=None)
     parser.add_argument("--batch-size", type=int, default=None)
     parser.add_argument("--lr", type=float, default=None)
-    parser.add_argument("--hidden", type=int, default=512)
-    parser.add_argument("--dropout", type=float, default=0.3)
+    parser.add_argument("--activation", choices=["none", "relu", "tanh"], default="none")
     parser.add_argument("--threshold", type=float, default=0.5)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--output-dir", type=Path, default=None)
@@ -184,7 +193,7 @@ def train_main(argv: Optional[Sequence[str]] = None) -> None:
     val_loader = DataLoader(val_ds, batch_size=args.batch_size)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = Classifier(features.shape[1], labels.shape[1], hidden=args.hidden, dropout=args.dropout).to(device)
+    model = Classifier(features.shape[1], labels.shape[1], activation=args.activation).to(device)
     best_state, best_f1 = train(model, train_loader, val_loader, args.epochs, args.lr, device, args.threshold)
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -204,10 +213,5 @@ def train_main(argv: Optional[Sequence[str]] = None) -> None:
     print(f"Best F1: {best_f1:.4f}")
 
 
-def eval_main(argv: Optional[Sequence[str]] = None) -> None:
-    """Evaluation is integrated into training for this minimal version."""
-    train_main(argv)
-
-
 if __name__ == "__main__":
-    train_main()
+    train_main(sys.argv[1:])

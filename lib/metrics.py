@@ -1,4 +1,4 @@
-"""Tiny metric helpers used by the trainers."""
+"""Tiny metric helpers."""
 from __future__ import annotations
 
 from typing import Dict, Union

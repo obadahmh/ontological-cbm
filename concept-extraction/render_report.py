@@ -26,13 +26,13 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.paths import add_repo_root_to_sys_path
+from lib.paths import add_repo_root_to_sys_path
 
 add_repo_root_to_sys_path()
-from src import constants as data_constants
-from src.extraction.dataset_iter import lookup_report_text
-from src.extraction.identifiers import pid_sid_from_path
-from src.extraction.per_study import iter_image_records
+from lib import constants as data_constants
+from concept_extraction.dataset_iter import lookup_report_text
+from concept_extraction.identifiers import pid_sid_from_path
+from concept_extraction.per_study import iter_image_records
 
 
 def load_jsonl(path: Path) -> List[Dict]:
@@ -1994,7 +1994,7 @@ def main() -> None:
     args = parse_args()
 
     # Clear any cached report data to ensure we use the latest code
-    from src.extraction.dataset_iter import _chexpert_plus_report_dict, _mimic_cxr_report_dict
+    from concept_extraction.dataset_iter import _chexpert_plus_report_dict, _mimic_cxr_report_dict
     _chexpert_plus_report_dict.cache_clear()
     _mimic_cxr_report_dict.cache_clear()
     REPORT_CACHE.clear()

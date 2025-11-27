@@ -1,4 +1,4 @@
-"""Minimal helpers shared by the lightweight training scripts."""
+"""Data utilities shared across scripts."""
 from __future__ import annotations
 
 import random

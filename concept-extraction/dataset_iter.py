@@ -2,14 +2,14 @@ from pathlib import Path
 import pandas as pd
 from typing import Iterator, Tuple, Optional, List
 from functools import lru_cache
-from src.extraction.identifiers import (
+from concept_extraction.identifiers import (
     normalize_patient_id,
     normalize_study_id,
     patient_dir_variants,
     pid_sid_from_path,
     study_dir_variants,
 )
-from src.constants import (
+from lib.constants import (
     # edit these in your repo; they're the only "config"
     MIMIC_SECTIONED_CSV, MIMIC_JPG_META_CSV, MIMIC_JPG_ROOT,
     CHEXPERT_PLUS_CSV, CHEXPERT_PLUS_ROOT,

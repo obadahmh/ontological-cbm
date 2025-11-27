@@ -1,4 +1,4 @@
-"""Utilities for CLIP fine-tuning and feature caching."""
+"""CLIP checkpoint utilities."""
 from __future__ import annotations
 
 import logging

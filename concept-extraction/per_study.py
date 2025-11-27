@@ -5,9 +5,9 @@ import json
 from pathlib import Path
 from typing import Dict, Iterable, Iterator, List, Optional, Set, Tuple
 
-from src.extraction.dataset_iter import iter_images, _load_chexpert_plus_table, _fallback_chexpert_dirs
-from src.extraction.identifiers import pid_sid_from_path
-from src.constants import CHEXPERT_PLUS_ROOT
+from concept_extraction.dataset_iter import iter_images, _load_chexpert_plus_table, _fallback_chexpert_dirs
+from concept_extraction.identifiers import pid_sid_from_path
+from lib.constants import CHEXPERT_PLUS_ROOT
 
 
 def _normalize_identifier(value: Optional[str]) -> str:

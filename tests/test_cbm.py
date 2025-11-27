@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from src.training.trainers.cbm import train_main
+from training.train_cbm import train_main
 
 
 def test_cbm_smoke(tmp_path):

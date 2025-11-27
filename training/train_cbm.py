@@ -1,9 +1,11 @@
-"""CBM label head trainer - self contained and minimal."""
+#!/usr/bin/env python3
+"""CBM label head trainer (flat layout)."""
 from __future__ import annotations
 
 import argparse
 import csv
 import json
+import sys
 from pathlib import Path
 from typing import List, Optional, Sequence, Tuple
 
@@ -11,8 +13,13 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
 
-from src.training.utils import align_data, set_seed
-from src.training.utils.metrics import compute_metrics
+# Ensure repo root is on sys.path
+REPO_ROOT = Path(__file__).resolve().parent.parent
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from lib.data import align_data, set_seed
+from lib.metrics import compute_metrics
 
 # Default CheXpert 14 labels.
 CHEXPERT_LABELS = (
@@ -230,10 +237,5 @@ def train_main(argv: Optional[Sequence[str]] = None) -> None:
     print(f"Best F1: {best_f1:.4f}")
 
 
-def eval_main(argv: Optional[Sequence[str]] = None) -> None:
-    """Evaluation is integrated into training for this minimal version."""
-    train_main(argv)
-
-
 if __name__ == "__main__":
-    train_main()
+    train_main(sys.argv[1:])

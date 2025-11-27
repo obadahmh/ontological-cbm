@@ -2,7 +2,7 @@ from pathlib import Path
 
 import torch
 
-from src.training.trainers.feature_classifier import train_main
+from training.train_classifier import train_main
 
 
 def test_concept_classifier_smoke(tmp_path: Path):

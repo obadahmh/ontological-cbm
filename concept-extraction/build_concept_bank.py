@@ -25,12 +25,12 @@ try:  # pragma: no cover - optional dependency
 except ImportError:  # pragma: no cover
     tqdm = None
 
-from src.paths import add_repo_root_to_sys_path
+from lib.paths import add_repo_root_to_sys_path
 
 add_repo_root_to_sys_path()
-from src.extraction.concepts import aggregation as concept_agg
-from src.extraction.concepts import input as concept_input
-from src.extraction.concepts import linking as concept_linking
+from concept_extraction.concepts import aggregation as concept_agg
+from concept_extraction.concepts import input as concept_input
+from concept_extraction.concepts import linking as concept_linking
 
 ClinicalEntityLinker = None  # populated when concept_linking constructs the linker
 

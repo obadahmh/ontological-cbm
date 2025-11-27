@@ -9,7 +9,7 @@ label_columns:
   - Pleural Effusion
   - Atelectasis
 chexpert5: true
-output_dir: data/outputs/clip_finetune_example
+output_dir: outputs/clip_finetune_example
 epochs: 5
 batch_size: 32
 learning_rate: 0.0002

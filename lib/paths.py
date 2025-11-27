@@ -1,8 +1,4 @@
-"""Centralized filesystem paths for data and outputs.
-
-This keeps scripts consistent whether they reference legacy symlink names
-(`generated/`, `outputs/`, etc.) or the consolidated `data/` directory.
-"""
+"""Centralized filesystem paths for outputs and data."""
 from __future__ import annotations
 
 import sys
@@ -17,11 +13,11 @@ if not DATA_DIR.exists():
     DATA_DIR = ROOT
 
 # Common locations
-GENERATED = DATA_DIR / "generated"
-OUTPUTS = DATA_DIR / "outputs"
+OUTPUTS = ROOT / "outputs"
+GENERATED = OUTPUTS  # legacy alias
 PRETRAINED = DATA_DIR / "pretrained"
 LOCAL_DATA = DATA_DIR / "local_data"
-TMP_RADGRAPH = DATA_DIR / "tmp_radgraph"
+TMP_RADGRAPH = ROOT / "tmp_radgraph"
 WANDB_RUNS = DATA_DIR / "wandb"
 
 

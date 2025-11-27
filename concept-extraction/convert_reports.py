@@ -24,12 +24,12 @@ try:  # pragma: no cover - optional dependency
 except ImportError:  # pragma: no cover - optional dependency
     tqdm = None
 
-from src.paths import add_repo_root_to_sys_path
+from lib.paths import add_repo_root_to_sys_path
 
 add_repo_root_to_sys_path()
-from src.extraction.concepts import aggregation as concept_agg
-from src.extraction.concepts import input as concept_input
-from src.extraction.concepts import linking as concept_linking
+from concept_extraction.concepts import aggregation as concept_agg
+from concept_extraction.concepts import input as concept_input
+from concept_extraction.concepts import linking as concept_linking
 
 normalize_record_id = concept_input.normalize_record_id
 load_annotation_payload = concept_input.load_annotation_payload
@@ -70,7 +70,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--output-jsonl",
-        default="generated/cui_links/report_cuis.jsonl",
+        default="outputs/cui_links/report_cuis.jsonl",
         help="Where to write the JSONL output (one record per row).",
     )
     parser.add_argument(

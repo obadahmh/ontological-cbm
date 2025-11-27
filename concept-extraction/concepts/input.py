@@ -15,7 +15,7 @@ try:
 except ImportError:  # pragma: no cover - optional dependency
     radgraph_utils = None
 
-from src.extraction.per_study import make_study_key
+from concept_extraction.per_study import make_study_key
 
 DEFAULT_TEXT_COLUMN = "section_impression"
 DERIVED_PATIENT_COLUMN = "__derived_patient_id"
@@ -186,7 +186,7 @@ def build_annotation_index(
 
 
 try:
-    from src.extraction.dataset_iter import _pid_sid_from_path  # type: ignore
+    from concept_extraction.dataset_iter import _pid_sid_from_path  # type: ignore
 except Exception:  # pragma: no cover - fallback parser
     def _pid_sid_from_path(path: str) -> Tuple[Optional[str], Optional[str]]:
         parts = Path(str(path)).parts

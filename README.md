@@ -9,23 +9,25 @@ Small, self-contained training loops for MedCLIP experiments. The trainers opera
    pip install -r requirements.txt
    ```
 
-2. Run a trainer (use `--` to forward args after the subcommand):
+2. Run a trainer:
    ```bash
    # CBM label head from concept predictions + label CSV
-   python scripts/train_cli.py cbm -- \
+   python training/train_cbm.py \
      --predictions preds.jsonl \
      --labels-csv labels.csv \
      --label-columns label1 label2 \
      --epochs 1
 
    # Concept classifier on feature + label tensors
-   python scripts/train_cli.py concept-classifier -- \
+   python training/train_classifier.py \
+     --mode concept \
      --features features.pt \
      --labels labels.pt \
      --epochs 1
 
    # Direct label classifier baseline
-   python scripts/train_cli.py blackbox-classifier -- \
+   python training/train_classifier.py \
+     --mode label \
      --features features.pt \
      --labels labels.pt \
      --epochs 1
@@ -38,9 +40,9 @@ Each trainer writes metrics and the best checkpoint into `outputs/...` (configur
 - **Concept/blackbox classifiers**: `.pt` or `.npz` tensors shaped `[num_samples, dim]` for features and `[num_samples, num_labels]` for labels.
 
 ## Layout
-- `scripts/train_cli.py`, `scripts/eval_cli.py` – entry points dispatching to trainers.
-- `src/training/` – training stack: trainers (`cbm.py`, `feature_classifier.py`), and training utils.
-- `src/extraction/` – concept extraction pipeline: concepts/, dataset iteration helpers, per-study utilities, and ID normalization.
+- `training/` – flat training scripts (`train_cbm.py`, `train_classifier.py`, `eval.py`, `predict.py`).
+- `concept-extraction/` – concept extraction scripts and helpers (`convert_reports.py`, `build_concept_bank.py`, `render_report.py`, etc.).
+- `lib/` – shared helpers (data seeding/alignment, metrics, identifiers, CLIP utilities).
 
 ## Testing
 Run the lightweight smoke tests:
