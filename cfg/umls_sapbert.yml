@@ -1,0 +1,21 @@
+allowed_tuis:
+  # Felix ontology-concept-distillation semantic types
+  - "T047"  # Disease or Syndrome
+  - "T046"  # Pathologic Function
+  - "T033"  # Finding
+  - "T019"  # Congenital Abnormality
+  - "T037"  # Injury or Poisoning
+  - "T017"  # Anatomical Structure
+  - "T023"  # Body Part, Organ, or Organ Component
+  - "T029"  # Body Location or Region
+  - "T030"  # Body Space or Junction
+  - "T082"  # Spatial Concept
+
+# Restrict concepts to specific vocabularies (e.g., SNOMEDCT_US).
+# Leave empty or remove this key to allow all UMLS sources.
+sources:
+  - "SNOMEDCT_US"
+  # - "MSH"
+  # - "LOINC"
+  # - "ICD10CM"
+  # - "ICD9CM"

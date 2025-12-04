@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import tempfile
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -19,6 +20,11 @@ from typing import Any, Dict, Iterable, List, MutableMapping, Optional, Sequence
 import pandas as pd
 import yaml
 import sys
+
+# Ensure repository root is on sys.path when invoked as a script (e.g., python concept_extraction/build_concept_bank.py)
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
 
 try:  # pragma: no cover - optional dependency
     from tqdm import tqdm
@@ -30,9 +36,7 @@ from lib.paths import add_repo_root_to_sys_path
 add_repo_root_to_sys_path()
 from concept_extraction.concepts import aggregation as concept_agg
 from concept_extraction.concepts import input as concept_input
-from concept_extraction.concepts import linking as concept_linking
-
-ClinicalEntityLinker = None  # populated when concept_linking constructs the linker
+from concept_extraction.concepts import ner as concept_ner
 
 ASSERTION_ALLOWED = concept_agg.ASSERTION_ALLOWED
 ASSERTION_PRECEDENCE = concept_agg.ASSERTION_PRECEDENCE
@@ -67,8 +71,8 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--config-path",
-        required=True,
-        help="YAML config containing SapBERT/UMLS resource paths (ontology-concept-distillation style).",
+        default="cfg/paths.yml",
+        help="YAML config containing SapBERT/UMLS resource paths (defaults to cfg/paths.yml, 'umls' section).",
     )
     parser.add_argument("--output-dir", required=True, help="Directory for concept_inventory + study_concepts outputs.")
     parser.add_argument(
@@ -167,14 +171,29 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
 
     with config_path.open("r", encoding="utf-8") as handle:
         config_payload = yaml.safe_load(handle) or {}
-    sapbert_model_id = config_payload.get("sapbert_model_id")
+    umls_cfg = config_payload.get("umls", config_payload)
+    # Merge in semantic filters from umls_sapbert.yml if the main config lacks them.
+    semantic_path = Path("cfg/umls_sapbert.yml")
+    if semantic_path.exists():
+        semantic_cfg = yaml.safe_load(semantic_path.read_text()) or {}
+        umls_cfg.setdefault("allowed_tuis", semantic_cfg.get("allowed_tuis"))
+        umls_cfg.setdefault("sources", semantic_cfg.get("sources"))
+        umls_cfg.setdefault("allowed_sources", semantic_cfg.get("allowed_sources"))
+        if semantic_cfg.get("radlex_csv_path") and not umls_cfg.get("radlex_csv_path"):
+            umls_cfg["radlex_csv_path"] = semantic_cfg["radlex_csv_path"]
+    sapbert_model_id = umls_cfg.get("sapbert_model_id")
 
-    min_link_score = config_payload.get("min_link_score")
+    min_link_score = umls_cfg.get("min_link_score")
     min_link_score = 0.8 if min_link_score is None else float(min_link_score)
     if not args.quiet:
         print("[info] initializing ClinicalEntityLinker and SapBERT resources…")
-    linker = concept_linking.create_linker(
-        config_path,
+    # Write UMLs config to a temp file to keep linker input clean
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".yml", delete=False) as tmp:
+        yaml.safe_dump(umls_cfg, tmp)
+        umls_cfg_path = Path(tmp.name)
+
+    linker = concept_ner.create_linker(
+        umls_cfg_path,
         annotation_index=annotation_index,
         min_link_score=min_link_score,
     )

@@ -1,0 +1,31 @@
+# Sample paths for datasets, outputs, and UMLS resources.
+# Copy to paths.local.yml and edit for your machine.
+
+data:
+  root: /path/to/datasets
+  mimic_sectioned_csv: /path/to/mimic_cxr_sectioned.csv.gz
+  mimic_jpg_meta_csv: /path/to/mimic-cxr-jpg/2.1.0/mimic-cxr-2.0.0-metadata.csv.gz
+  mimic_chexp_csv: /path/to/mimic-cxr-jpg/2.1.0/mimic-cxr-2.0.0-chexpert.csv.gz
+  mimic_jpg_root: /path/to/mimic-cxr-jpg/2.1.0/files
+  mimic_jpg_split_csv: /path/to/mimic-cxr-jpg/2.1.0/mimic-cxr-2.0.0-split.csv.gz
+  chexpert_plus_csv: /path/to/CheXpert/df_chexpert_plus_240401.csv
+  chexpert_plus_root: /path/to/CheXpert/PNG
+  chexpert_plus_path_col: path_to_image
+  chexpert_plus_impress_col: section_impression
+  chexpert_plus_findings_col: section_findings
+  chexpert_plus_study_id_col: study_id
+
+outputs:
+  root: /path/to/outputs
+
+umls:
+  root: /mnt/e/UMLS/2025AA-full/2025AA/META/
+  # META contains only RRF files; point directly at them.
+  mrconso_path: /mnt/e/UMLS/2025AA-full/2025AA/META/MRCONSO.RRF
+  mrsty_path: /mnt/e/UMLS/2025AA-full/2025AA/META/MRSTY.RRF
+  mrrel_path: /mnt/e/UMLS/2025AA-full/2025AA/META/MRREL.RRF
+  # Optional precomputed resources; leave blank if not built yet.
+  strings_tsv: ""
+  semantic_types_tsv: ""
+  faiss_index: ""
+  sapbert_checkpoint: ""

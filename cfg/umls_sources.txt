@@ -1,0 +1,190 @@
+AIR - AIRS eligibility lists
+ALT - Alternative billing concepts
+AOD - Alcohol and drug terms
+AOT - Alpha Omega
+ATC - Anatomical Therapeutic Chemical
+BI - Baxter intervention
+CCC - Clinical Care Classification
+CCPSS - Cancer Chemoprevention Subset
+CCS - Clinical Classifications Software
+CCSR_ICD10CM - CCSR for ICD-10-CM
+CCSR_ICD10PCS - CCSR for ICD-10-PCS
+CDCREC - CDC Race and Ethnicity
+CDT - Current Dental Terminology
+CHV - Consumer Health Vocabulary
+COSTAR - COSTAR coding
+CPM - Medical Entities Dictionary
+CPT - Current Procedural Terminology
+CPTSP - Spanish CPT
+CSP - CRISP Thesaurus
+CST - CRISP Scientific Terms
+CVX - CDC Vaccine Codes
+DDB - Dutch Diagnosis Thesaurus
+DMDICD10 - DMD ICD-10 cross map
+DMDUMD - DMD UMD cross map
+DRUGBANK - DrugBank
+DSM-5 - Diagnostic and Statistical Manual 5
+DXP - DXplain
+FMA - Foundational Model of Anatomy
+GO - Gene Ontology
+GS - Goldman Sachs??? (placeholder)
+HCDT - Hospital charges/drug terminology
+HCPCS - Healthcare Common Procedure Coding System
+HCPT - HCPCS(?) variation
+HGNC - HUGO Gene Nomenclature
+HL7V2.5 - HL7 Version 2.5
+HL7V3.0 - HL7 Version 3.0
+HPO - Human Phenotype Ontology
+ICD10 - ICD-10 (WHO)
+ICD10AE - ICD-10 Australian Extension
+ICD10AM - ICD-10 Australian Modification
+ICD10AMAE - ICD-10 AM/AE hybrid
+ICD10CM - ICD-10-CM (US)
+ICD10DUT - ICD-10 Dutch
+ICD10PCS - ICD-10 Procedure Coding System
+ICD9CM - ICD-9-CM
+ICF - International Classification of Functioning
+ICF-CY - ICF for Children and Youth
+ICNP - International Classification for Nursing Practice
+ICPC - International Classification of Primary Care
+ICPC2EDUT - ICPC2 Dutch
+ICPC2EENG - ICPC2 English
+ICPC2ICD10DUT - ICPC2 to ICD-10 Dutch map
+ICPC2ICD10ENG - ICPC2 to ICD-10 English map
+ICPC2P - ICPC2 PLUS
+ICPCBAQ - ICPC Basque
+ICPCDAN - ICPC Danish
+ICPCDUT - ICPC Dutch
+ICPCFIN - ICPC Finnish
+ICPCFRE - ICPC French
+ICPCGER - ICPC German
+ICPCHEB - ICPC Hebrew
+ICPCHUN - ICPC Hungarian
+ICPCITA - ICPC Italian
+ICPCNOR - ICPC Norwegian
+ICPCPOR - ICPC Portuguese
+ICPCSPA - ICPC Spanish
+ICPCSWE - ICPC Swedish
+JABL - Jablonski synonyms
+KCD5 - Korean Classification of Disease 5
+LCH - Library of Congress headings
+LCH_NW - LCH new
+LNC - LOINC
+LNC-DE-AT - LOINC German (Austria)
+LNC-DE-DE - LOINC German (Germany)
+LNC-EL-GR - LOINC Greek
+LNC-ES-AR - LOINC Spanish (Argentina)
+LNC-ES-ES - LOINC Spanish (Spain)
+LNC-ES-MX - LOINC Spanish (Mexico)
+LNC-ET-EE - LOINC Estonian
+LNC-FR-BE - LOINC French (Belgium)
+LNC-FR-CA - LOINC French (Canada)
+LNC-FR-FR - LOINC French (France)
+LNC-IT-IT - LOINC Italian
+LNC-KO-KR - LOINC Korean
+LNC-NL-NL - LOINC Dutch
+LNC-PL-PL - LOINC Polish
+LNC-PT-BR - LOINC Portuguese (Brazil)
+LNC-RU-RU - LOINC Russian
+LNC-TR-TR - LOINC Turkish
+LNC-UK-UA - LOINC Ukrainian
+LNC-ZH-CN - LOINC Chinese
+MCM - Medical Care Microbiology
+MDR - MedDRA
+MDRARA - MedDRA Arabic
+MDRBPO - MedDRA Brazilian Portuguese
+MDRCZE - MedDRA Czech
+MDRDUT - MedDRA Dutch
+MDREST - MedDRA Estonian
+MDRFIN - MedDRA Finnish
+MDRFRE - MedDRA French
+MDRGER - MedDRA German
+MDRGRE - MedDRA Greek
+MDRHRV - MedDRA Croatian
+MDRHUN - MedDRA Hungarian
+MDRISL - MedDRA Icelandic
+MDRITA - MedDRA Italian
+MDRJPN - MedDRA Japanese
+MDRKOR - MedDRA Korean
+MDRLAV - MedDRA Latvian
+MDRLIT - MedDRA Lithuanian
+MDRPOL - MedDRA Polish
+MDRPOR - MedDRA Portuguese
+MDRRUS - MedDRA Russian
+MDRSPA - MedDRA Spanish
+MDRSWE - MedDRA Swedish
+MED-RT - Medical Reference Terminology
+MEDCIN - MEDCIN clinical terms
+MEDLINEPLUS - MedlinePlus
+MEDLINEPLUS_SPA - MedlinePlus Spanish
+MMSL - Multum Lexicon
+MMX - Micromedex
+MSH - MeSH (English)
+MSHCZE - MeSH Czech
+MSHDUT - MeSH Dutch
+MSHFIN - MeSH Finnish
+MSHFRE - MeSH French
+MSHGER - MeSH German
+MSHITA - MeSH Italian
+MSHJPN - MeSH Japanese
+MSHLAV - MeSH Latvian
+MSHNOR - MeSH Norwegian
+MSHPOL - MeSH Polish
+MSHPOR - MeSH Portuguese
+MSHRUS - MeSH Russian
+MSHSCR - MeSH Croatian
+MSHSPA - MeSH Spanish
+MSHSWE - MeSH Swedish
+MTH - Metathesaurus names
+MTHCMSFRF - CMS Formulary Reference
+MTHICD9 - Metathesaurus ICD-9 map
+MTHICPC2EAE - Metathesaurus ICPC2E AE map
+MTHICPC2ICD10AE - Metathesaurus ICPC2E to ICD-10 AE map
+MTHMST - Metathesaurus semantic types
+MTHMSTFRE - MTH semantic types (French)
+MTHMSTITA - MTH semantic types (Italian)
+MTHSPL - FDA Structured Product Labels
+MVX - CDC Vaccine Manufacturers
+NANDA-I - Nursing diagnoses (NANDA)
+NCBI - NCBI taxonomy
+NCI - NCI Thesaurus
+NDDF - First DataBank drug codes
+NEU - Neurology terms
+NIC - Nursing interventions (NIC)
+NOC - Nursing outcomes (NOC)
+NUCCHCPT - NUCC Health Care Provider Taxonomy
+OMIM - Online Mendelian Inheritance in Man
+OMS - Omaha System
+ORPHANET - Orphanet rare disease terms
+PCDS - Primary Care Dictionary
+PDQ - NCI Physician Data Query
+PNDS - Perioperative Nursing Data Set
+PPAC - CPT Anesthesia crosswalk
+PSY - Psychology terms
+QMR - Quick Medical Reference
+RAM - Read codes old version
+RCD - Read Codes
+RCDAE - Read Codes Australian edition
+RCDSA - Read Codes South African
+RCDSY - Read Codes synonymy
+RXNORM - RxNorm
+SCTSPA - SNOMED CT Spanish
+SNM - SNOMED 2
+SNMI - SNOMED International
+SNOMEDCT_US - SNOMED CT US
+SNOMEDCT_VET - SNOMED CT Veterinary
+SOP - Standard Operating Procedures
+SPN - Spanish Nursing terms
+SRC - Source abbreviation codes
+TKMT - Traditional Korean Medicine Terms
+ULT - Ultrasound Lexicon
+UMD - Universal Medical Device Nomenclature
+USP - United States Pharmacopeia
+USPMG - US Pharmacopoeial Measures
+UWDA - University of Washington Digital Anatomy
+VANDF - VA National Drug File
+WHO - WHO Terminologies
+WHOFRE - WHO French
+WHOGER - WHO German
+WHOPOR - WHO Portuguese
+WHOSPA - WHO Spanish

@@ -23,12 +23,19 @@ DERIVED_STUDY_COLUMN = "__derived_study_id"
 
 DATASET_PRESETS: Dict[str, Dict[str, Tuple[str, ...]]] = {
     "chexpert_plus": {
-        "text": ("section_impression", "section_summary", "section_findings", "report", "impression"),
+        "text": (
+            "section_impression",
+            "section_summary",
+            "section_findings",
+            "report",
+            "impression",
+            "report_text",
+        ),
         "patient": (DERIVED_PATIENT_COLUMN, "deid_patient_id", "patient_id", "subject_id"),
         "study": (DERIVED_STUDY_COLUMN, "study_id", "dicom_id", "path_to_image", "path_to_dcm"),
     },
     "mimic_cxr": {
-        "text": ("findings", "impression", "report"),
+        "text": ("findings", "impression", "report", "report_text"),
         "patient": ("subject_id", "patient_id"),
         "study": ("study_id", "dicom_id"),
     },

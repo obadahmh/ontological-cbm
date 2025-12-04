@@ -9,7 +9,7 @@ import numpy as np
 
 _PID_STUDY_PAT = re.compile(r"patient(\d+)/study(\d+)", re.I)
 _PID_PREFIX_PAT = re.compile(r"patient0*(\d+)", re.I)
-_STUDY_PREFIX_PAT = re.compile(r"study0*(\d+)", re.I)
+_STUDY_PREFIX_PAT = re.compile(r"(?:study|s)0*(\d+)", re.I)
 
 
 def normalize_patient_id(pid: Optional[str]) -> Optional[str]:

@@ -44,3 +44,4 @@ sample_reports/
 .idea/
 *.swp
 .DS_Store
+paths.yml

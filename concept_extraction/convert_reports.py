@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import tempfile
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, MutableMapping, Optional, Sequence, Tuple, Union
@@ -29,7 +30,7 @@ from lib.paths import add_repo_root_to_sys_path
 add_repo_root_to_sys_path()
 from concept_extraction.concepts import aggregation as concept_agg
 from concept_extraction.concepts import input as concept_input
-from concept_extraction.concepts import linking as concept_linking
+from concept_extraction.concepts import ner as concept_ner
 
 normalize_record_id = concept_input.normalize_record_id
 load_annotation_payload = concept_input.load_annotation_payload
@@ -58,8 +59,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--config-path",
-        required=True,
-        help="Path to ontology-concept-distillation style YAML config with UMLS resources.",
+        default="cfg/paths.yml",
+        help="Path to YAML containing paths; the 'umls' section is used for linking (defaults to cfg/paths.yml).",
     )
     parser.add_argument(
         "--annotations-path",
@@ -201,8 +202,16 @@ def main() -> None:
                 f"{len(args.annotation_paths)} file(s)"
             )
 
-    linker = concept_linking.create_linker(
-        config_path,
+    # Extract umls section to a temp config for the linker
+    with open(config_path, "r", encoding="utf-8") as handle:
+        config_payload = yaml.safe_load(handle) or {}
+    umls_cfg = config_payload.get("umls", config_payload)
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".yml", delete=False) as tmp:
+        yaml.safe_dump(umls_cfg, tmp)
+        umls_cfg_path = Path(tmp.name)
+
+    linker = concept_ner.create_linker(
+        umls_cfg_path,
         use_gpu=(not args.cpu_only),
         sentence_model=args.sentence_model,
         faiss_fp16=args.faiss_fp16 or None,

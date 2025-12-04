@@ -11,25 +11,24 @@ from concept_extraction.identifiers import (
 )
 from lib.constants import (
     # edit these in your repo; they're the only "config"
-    MIMIC_SECTIONED_CSV, MIMIC_JPG_META_CSV, MIMIC_JPG_ROOT,
-    CHEXPERT_PLUS_CSV, CHEXPERT_PLUS_ROOT,
+    MIMIC_JPG_META_CSV,
+    MIMIC_JPG_ROOT,
+    CHEXPERT_PLUS_CSV,
+    CHEXPERT_PLUS_ROOT,
 )
 
 
 # -------- MIMIC-CXR --------
 def iter_mimic_reports() -> Iterator[Tuple[str, str]]:
     """
-    Yields (study_id, report_text) from MIMIC-CXR.
-    Prefers the sectioned CSV (impression/findings) for clean text.
+    Yields (study_id, report_text) from MIMIC-CXR by scanning raw report .txt files.
     """
-    p = Path(MIMIC_SECTIONED_CSV)
-    if not p.exists():
-        raise FileNotFoundError(f"MIMIC_SECTIONED_CSV not found: {p}")
-    df = pd.read_csv(p)
-    imp = df.get("impression", pd.Series([""]*len(df))).fillna("").astype(str).str.strip()
-    fin = df.get("findings",   pd.Series([""]*len(df))).fillna("").astype(str).str.strip()
-    rep = imp.where(imp.ne(""), fin)
-    for sid, rpt in zip(df["study_id"].astype(str), rep):
+    # Import here to avoid circular dependency on per_study -> dataset_iter.
+    from concept_extraction.concepts.input import load_mimic_reports_dataframe
+
+    iter_progress = (lambda it, **kw: tqdm(it, **kw)) if 'tqdm' in globals() and tqdm is not None else (lambda it, **kw: it)
+    df, text_col, _, sid_col, _ = load_mimic_reports_dataframe(path_hint=None, quiet=True, iter_progress=iter_progress)
+    for sid, rpt in zip(df[sid_col].astype(str), df[text_col].astype(str)):
         if rpt:
             yield sid, rpt
 
